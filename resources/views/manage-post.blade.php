@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Manage') }}</div>
+                <div class="card-header">{{ __('Manage Posts') }}</div>
 
                 <div class="card-body">
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTable">
@@ -21,7 +21,9 @@
                                 <th>
                                     Body
                                 </th>  
-                                         
+                                <th>
+                                    User
+                                </th>     
                                 <th>
                                     Added On
                                 </th>
@@ -47,7 +49,9 @@
                                         <td>
                                             {{ $post->post }}
                                         </td>  
-                                        
+                                        <td>
+                                            {{ $post->user_id }}
+                                        </td>
                                         <td>
                                             {{$post->created_at->diffForHumans()}}
                                         </td>  

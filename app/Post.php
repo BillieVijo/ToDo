@@ -10,8 +10,8 @@ class Post extends Model
         'postTitle','post',
     ];
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\User');
     }
 }

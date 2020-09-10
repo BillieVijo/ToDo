@@ -21,6 +21,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        //$users = User::with('post')->get();
+        // $u = $posts->user_id;
+        // $users = User::get($u);
         return view('manage-post',compact('posts'));
     }
 
@@ -63,7 +66,7 @@ class PostController extends Controller
 
         $posts->save();
 
-        return view('add-post');
+        return redirect()->route('manage-post');
     }
 
     /**
@@ -108,6 +111,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        
+        $post->delete();
+        
+        return redirect()->route('manage-post');
     }
 }

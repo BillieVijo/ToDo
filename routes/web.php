@@ -22,6 +22,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/add-post', 'PostController@create')->name('add-post');
 Route::get('/manage-post', 'PostController@index')->name('manage-post');
-Route::get('/edit-post', 'PostController@create')->name('edit-post');
-Route::get('/delete-post', 'PostController@index')->name('delete-post');
+Route::get('/edit-post/{post_id}', 'PostController@edit')->name('edit-post');
+Route::get('/delete-post/{post_id}', 'PostController@destroy')->name('delete-post');
 Route::post('/save-post', 'PostController@store')->name('save-post');
