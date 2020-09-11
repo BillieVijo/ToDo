@@ -88,7 +88,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $posts = Post::findOrFail($id);
+        return view('edit-post',compact('posts'));
     }
 
     /**
@@ -100,7 +101,28 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validate the form input
+        $request->validate([
+            'postTitle' => 'required|string|max:150',
+            'post' => 'required|string',
+            
+        ], [
+            'postTitle.required' => 'Opps! Post Title is required',
+            'postTitle.max' => 'Opps! Post Title is too long',
+            'post.required' => 'Opps! Post is required',
+        ]);
+
+        $posts = Post::find($id);
+        //$user = new User;
+        
+        // assign input values to the object
+        $posts->postTitle = $request->postTitle;
+        $posts->post = $request->post;
+        $posts->user_id = Auth::user()->id;
+
+        $posts->update();
+
+        return redirect()->route('manage-post');
     }
 
     /**

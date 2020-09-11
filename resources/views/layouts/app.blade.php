@@ -48,6 +48,9 @@
                         <li>
                             <a class="nav-link" href="{{ url('/add-post') }}">Add Post</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="{{ url('/manage-post') }}">Manage Post</a>
+                        </li>
                         @endguest
                     </ul>
 
