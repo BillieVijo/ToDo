@@ -21,13 +21,16 @@
                                 <th>
                                     Body
                                 </th>  
+                                 
                                 <th>
-                                    User
-                                </th>     
+                                    Favorite
+                                </th>    
                                 <th>
                                     Added On
                                 </th>
-                                
+                                <th>
+                                    Completed?
+                                </th>
                                 <th data-hide="phone">Actions</th>
                             </tr>
                         </thead>
@@ -49,16 +52,44 @@
                                         <td>
                                             {{ $post->post }}
                                         </td>  
+                                        
                                         <td>
-                                            {{ $post->user_id }}
+                                            <!-- fav star -->
+                                            @if($post->status == 'FAVORITE')
+                                                <i class="fa fa-star"></i>
+                                            @else
+                                                <i></i>
+                                            @endif
                                         </td>
                                         <td>
                                             {{$post->created_at->diffForHumans()}}
                                         </td>  
-                                        
                                         <td>
-                                            <a href="{{ route('edit-post', $post->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                                            <a href="{{ route('delete-post', $post->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('are you sure??');"><i class="fa fa-trash"></i></a>
+                                            <!-- complete or  not -->
+                                            @if($post->sts == 'COMPLETE')
+                                                <i class="fa fa-check"></i>
+                                            @else
+                                                <i class="fa fa-times"></i>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('edit-post', $post->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i>
+                                            </a>
+                                            <a href="{{ route('delete-post', $post->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('are you sure??');"><i class="fa fa-trash"></i>
+                                            </a>
+                                            @if($post->sts == 'COMPLETE')
+                                            <a href="{{ route('un-complete-post', $post->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Is this uncomplete??');"><i class="fa fa-times"></i>
+                                            </a>
+                                            @else
+                                            <a href="{{ route('complete-post', $post->id) }}" class="btn btn-success btn-sm" onclick="return confirm('Is this complete??');"><i class="fa fa-check"></i>
+                                            </a>
+                                            @endif
+                                            @if($post->status == 'FAVORITE')
+                                            @else
+                                            <a href="{{ route('fav-post', $post->id) }}" class="btn btn-warning btn-sm" onclick="return confirm('Is this Your Favorite??');"><i class="fa fa-star"></i>
+                                            </a>
+                                            @endif
+
                                         </td>
                                     </tr>
                                 @endforeach

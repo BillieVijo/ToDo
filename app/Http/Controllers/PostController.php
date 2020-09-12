@@ -19,11 +19,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $posts = Post::all();
-        //$users = User::with('post')->get();
-        // $u = $posts->user_id;
-        // $users = User::get($u);
+    {        
+        $posts = Post::where('user_id', Auth::user()->id)->get();         
         return view('manage-post',compact('posts'));
     }
 
@@ -113,7 +110,6 @@ class PostController extends Controller
         ]);
 
         $posts = Post::find($id);
-        //$user = new User;
         
         // assign input values to the object
         $posts->postTitle = $request->postTitle;
@@ -123,6 +119,23 @@ class PostController extends Controller
         $posts->update();
 
         return redirect()->route('manage-post');
+    }
+
+    public function fav($id){
+        //$fav = Post::findOrFail($id);
+        Post::where('id', $id)->update(['status'=>'FAVORITE']);
+        //$fav->update(['status'=>'FAVORITE']);
+        return redirect()->back();
+    }
+
+    public function complete($id){
+        Post::where('id', $id)->update(['sts'=>'COMPLETE']);
+        return redirect()->back();
+    }
+
+    public function un_complete($id){
+        Post::where('id', $id)->update(['sts'=>NULL]);
+        return redirect()->back();
     }
 
     /**

@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     @if($posts)
-                    <form method="POST" action="{{ route('save-post') }}">
+                    <form method="POST" action="{{ route('update-post', $posts->id) }}">
                         @csrf
 
                         <div class="form-group row">
