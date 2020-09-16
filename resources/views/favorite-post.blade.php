@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Manage Posts') }}</div>
+                <div class="card-header">{{ __('favorite Posts') }}</div>
 
                 <div class="card-body">
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTable">
@@ -78,18 +78,12 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('edit-post', $post->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i>
-                                            </a>
-                                            <a href="{{ route('delete-post', $post->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('are you sure??');"><i class="fa fa-trash"></i>
-                                            </a>
-                                            @if($post->sts == 'COMPLETE')
-                                            <a href="{{ route('un-complete-post', $post->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Is this uncomplete??');"><i class="fa fa-times"></i>
-                                            </a>
-                                            @else
-                                            <a href="{{ route('complete-post', $post->id) }}" class="btn btn-success btn-sm" onclick="return confirm('Is this complete??');"><i class="fa fa-check"></i>
-                                            </a>
-                                            @endif
+                                            
+
+                                            
                                             @if($post->status == 'FAVORITE')
+                                            <a href="{{ route('unfav-post', $post->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('You want to unFavorite??');"><i class="fa fa-times"></i>
+                                            </a>
                                             @else
                                             <a href="{{ route('fav-post', $post->id) }}" class="btn btn-warning btn-sm" onclick="return confirm('Is this Your Favorite??');"><i class="fa fa-star"></i>
                                             </a>

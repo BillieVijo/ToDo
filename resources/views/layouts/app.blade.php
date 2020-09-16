@@ -20,7 +20,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- fint awesome -->
+    <!-- font awesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Styles -->
@@ -50,6 +50,9 @@
                         </li>
                         <li>
                             <a class="nav-link" href="{{ url('/manage-post') }}">Manage Post</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ url('/favorite-post') }}">Favorite Post</a>
                         </li>
                         @endguest
                     </ul>

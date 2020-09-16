@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('postTitle');
             $table->string('post');
+            $table->string('postImage');
             $table->string('status')->nullable();
             $table->string('sts')->nullable();
             $table->unsignedBigInteger('user_id');

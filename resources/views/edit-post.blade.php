@@ -9,9 +9,22 @@
 
                 <div class="card-body">
                     @if($posts)
-                    <form method="POST" action="{{ route('update-post', $posts->id) }}">
+                    <form method="POST" action="{{ route('update-post', $posts->id) }}" enctype="multipart/form-data">
                         @csrf
 
+                        <div class="form-group row">
+                            <label for="postImage" class="col-md-4 col-form-label text-md-right">{{ __('Post Image') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="postImage" type="file" class="form-control @error('postImage') is-invalid @enderror" name="postImage" value="{{ $posts->postImage }}" autocomplete="postImage" autofocus>
+
+                                @error('postImage')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="postTitle" class="col-md-4 col-form-label text-md-right">{{ __('Post Title') }}</label>
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\User;
 use Auth;
+use Image;
 
 class PostController extends Controller
 {
@@ -24,6 +25,11 @@ class PostController extends Controller
         return view('manage-post',compact('posts'));
     }
 
+    public function favorite()
+    {        
+        $posts = Post::where('status', 'FAVORITE')->get();         
+        return view('favorite-post',compact('posts'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -46,11 +52,14 @@ class PostController extends Controller
         $request->validate([
             'postTitle' => 'required|string|max:150',
             'post' => 'required|string',
-            
+            'postImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'postTitle.required' => 'Opps! Post Title is required',
             'postTitle.max' => 'Opps! Post Title is too long',
             'post.required' => 'Opps! Post is required',
+            'postImage.required' => 'Opps! Post Image is required',
+            'postImage.max' => 'Opps! Post Image File too large',
+            'postImage.mimes' => 'Opps! Post Image type Not Supported',
         ]);
 
         $posts = new Post;
@@ -60,6 +69,22 @@ class PostController extends Controller
         $posts->postTitle = $request->postTitle;
         $posts->post = $request->post;
         $posts->user_id = Auth::user()->id;
+
+        if ($files = $request->file('postImage')) {
+     
+            // for save original image
+            $ImageUpload = Image::make($files);
+            $originalPath = public_path().'/images/';
+            $ImageUpload->save($originalPath.$files->getClientOriginalName());
+             
+            // for save thumnail image
+            $thumbnailPath = public_path().'/thumbnail/';
+            $ImageUpload->resize(276,357);
+            $ImageUpload = $ImageUpload->save($thumbnailPath.$files->getClientOriginalName());
+         
+            $posts->postImage  = $files->getClientOriginalName();
+          
+        }
 
         $posts->save();
 
@@ -102,11 +127,14 @@ class PostController extends Controller
         $request->validate([
             'postTitle' => 'required|string|max:150',
             'post' => 'required|string',
-            
+            'postImage' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'postTitle.required' => 'Opps! Post Title is required',
             'postTitle.max' => 'Opps! Post Title is too long',
             'post.required' => 'Opps! Post is required',
+            // 'postImage.required' => 'Opps! Post Image is required',
+            'postImage.max' => 'Opps! Post Image File too large',
+            'postImage.mimes' => 'Opps! Post Image type Not Supported',
         ]);
 
         $posts = Post::find($id);
@@ -116,6 +144,24 @@ class PostController extends Controller
         $posts->post = $request->post;
         $posts->user_id = Auth::user()->id;
 
+        if ($posts->postImage) {
+            if ($files = $request->file('postImage')) {
+     
+                // for save original image
+                $ImageUpload = Image::make($files);
+                $originalPath = public_path().'/images/';
+                $ImageUpload->save($originalPath.$files->getClientOriginalName());
+                 
+                // for save thumnail image
+                $thumbnailPath = public_path().'/thumbnail/';
+                $ImageUpload->resize(250,125);
+                $ImageUpload = $ImageUpload->save($thumbnailPath.$files->getClientOriginalName());
+             
+                $posts->postImage  = $files->getClientOriginalName();
+              
+            }
+        }
+
         $posts->update();
 
         return redirect()->route('manage-post');
@@ -124,6 +170,13 @@ class PostController extends Controller
     public function fav($id){
         //$fav = Post::findOrFail($id);
         Post::where('id', $id)->update(['status'=>'FAVORITE']);
+        //$fav->update(['status'=>'FAVORITE']);
+        return redirect()->back();
+    }
+
+    public function unfav($id){
+        //$fav = Post::findOrFail($id);
+        Post::where('id', $id)->update(['status'=>NULL]);
         //$fav->update(['status'=>'FAVORITE']);
         return redirect()->back();
     }
