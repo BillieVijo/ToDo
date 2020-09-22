@@ -54,6 +54,9 @@
                         <li>
                             <a class="nav-link" href="{{ url('/favorite-post') }}">Favorite Post</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="{{url('/report')}}">Report</a>
+                        </li>
                         @endguest
                     </ul>
 
@@ -100,7 +103,9 @@
     <script>
     $(document).ready(function() {
         $('#dataTable').dataTable({
-            
+            columnDefs: [
+                { width: 200, targets: 7 }
+            ],
     });
     });
     </script>

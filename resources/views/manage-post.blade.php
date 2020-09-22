@@ -61,7 +61,7 @@
                                         <td>
                                             <!-- fav star -->
                                             @if($post->status == 'FAVORITE')
-                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star" style="color:green;"></i>
                                             @else
                                                 <i></i>
                                             @endif
@@ -72,9 +72,9 @@
                                         <td>
                                             <!-- complete or  not -->
                                             @if($post->sts == 'COMPLETE')
-                                                <i class="fa fa-check"></i>
+                                                <i class="fa fa-check" style="color:green;"></i>
                                             @else
-                                                <i class="fa fa-times"></i>
+                                                <i class="fa fa-times" style="color:red;"></i>
                                             @endif
                                         </td>
                                         <td>
